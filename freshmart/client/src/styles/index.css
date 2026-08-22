@@ -1,0 +1,126 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: dark;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+
+body {
+  @apply bg-midnight text-white antialiased font-sans;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+::selection {
+  background: rgba(0, 212, 106, 0.35);
+  color: #fff;
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+::-webkit-scrollbar-track {
+  background: #0a0f0d;
+}
+::-webkit-scrollbar-thumb {
+  background: #1e332a;
+  border-radius: 8px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #2c4a3c;
+}
+
+@layer components {
+  .container-fm {
+    @apply mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8;
+  }
+
+  .btn {
+    @apply inline-flex items-center justify-center gap-2 rounded-xl px-5 py-3 text-sm font-semibold transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-leaf-500 focus-visible:ring-offset-2 focus-visible:ring-offset-midnight disabled:cursor-not-allowed disabled:opacity-50;
+  }
+
+  .btn-primary {
+    @apply btn bg-leaf-500 text-leaf-950 hover:bg-leaf-400 hover:shadow-glow active:scale-[0.97];
+  }
+
+  .btn-outline {
+    @apply btn border border-leaf-500/30 text-leaf-100 hover:border-leaf-500/70 hover:bg-leaf-500/10 active:scale-[0.97];
+  }
+
+  .btn-ghost {
+    @apply btn text-gray-300 hover:bg-white/5 hover:text-white active:scale-[0.97];
+  }
+
+  .btn-danger {
+    @apply btn bg-red-600 text-white hover:bg-red-500 active:scale-[0.97];
+  }
+
+  .input {
+    @apply w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-white placeholder:text-gray-500 transition-all duration-200 focus:border-leaf-500/60 focus:bg-white/[0.07] focus:outline-none focus:ring-2 focus:ring-leaf-500/20;
+  }
+
+  .label {
+    @apply mb-1.5 block text-xs font-medium uppercase tracking-wider text-gray-400;
+  }
+
+  .card {
+    @apply rounded-2xl border border-white/10 bg-white/[0.03] backdrop-blur-sm;
+  }
+
+  .section-title {
+    @apply font-display text-3xl font-extrabold tracking-tight text-white sm:text-4xl;
+  }
+
+  .section-sub {
+    @apply mt-3 max-w-2xl text-gray-400;
+  }
+
+  .chip {
+    @apply inline-flex items-center gap-1.5 rounded-full border border-leaf-500/30 bg-leaf-500/10 px-3 py-1 text-xs font-medium text-leaf-100;
+  }
+}
+
+.text-gradient {
+  background: linear-gradient(120deg, #00f5a0 0%, #00d46a 50%, #52f7ae 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.filter-link {
+  @apply block w-full rounded-lg px-3 py-2 text-left text-sm text-gray-400 transition-colors hover:bg-white/5 hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-leaf-500;
+}
+
+.filter-link-active {
+  @apply bg-leaf-500/10 font-medium text-leaf-100;
+}
+
+.focus-ring {
+  @apply focus:outline-none focus-visible:ring-2 focus-visible:ring-leaf-500;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
