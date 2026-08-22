@@ -2,7 +2,7 @@ import axios, { AxiosError } from 'axios'
 import { useAuthStore } from '@/store/authStore'
 import { useToastStore } from '@/store/toastStore'
 
-// Helper to ensure baseURL safely ends with '/api' without double slashes
+// Build a clean, reliable base URL with /api suffix
 const getApiBaseUrl = (): string => {
   const rawUrl = (import.meta.env.VITE_API_URL as string | undefined) || ''
   if (!rawUrl || rawUrl.trim() === '') {
@@ -18,6 +18,9 @@ const api = axios.create({
   baseURL: apiBaseUrl,
   withCredentials: true,
   timeout: 20000,
+  headers: {
+    'Content-Type': 'application/json',
+  },
 })
 
 api.interceptors.response.use(
