@@ -35,12 +35,30 @@ app.use(
   }),
 )
 
+const allowedOrigins = [
+  'http://localhost:5173',
+  'http://localhost:3000',
+  'https://fresh-mart-v2.vercel.app',
+  'https://dhanushgopi2456.github.io',
+  ...(env.clientUrl ? env.clientUrl.split(',').map((o) => o.trim()) : []),
+].filter(Boolean)
+
 app.use(
   cors({
-    origin: env.clientUrl
-      .split(',')
-      .map((o) => o.trim()),
+    origin: (origin, callback) => {
+      if (!origin) return callback(null, true)
+      if (
+        allowedOrigins.includes(origin) ||
+        allowedOrigins.includes('*') ||
+        origin.endsWith('.vercel.app')
+      ) {
+        return callback(null, true)
+      }
+      return callback(new Error(`Blocked by CORS: ${origin}`))
+    },
     credentials: true,
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With'],
   }),
 )
 
