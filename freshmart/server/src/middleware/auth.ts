@@ -35,23 +35,38 @@ export function verifyRefreshToken(token: string): { sub: string } {
 }
 
 export function setAuthCookies(res: Response, access: string, refresh: string): void {
+  const isSecure = env.isProd || process.env.NODE_ENV === 'production'
+
   const base = {
     httpOnly: true,
-    sameSite: 'lax' as const,
-    secure: env.isProd,
+    sameSite: isSecure ? ('none' as const) : ('lax' as const),
+    secure: isSecure,
+    path: '/',
   }
-  res.cookie(ACCESS_COOKIE, access, { ...base, maxAge: 15 * 60 * 1000, path: '/api' })
+
+  res.cookie(ACCESS_COOKIE, access, {
+    ...base,
+    maxAge: 15 * 60 * 1000, // 15 mins
+  })
+
   res.cookie(REFRESH_COOKIE, refresh, {
     ...base,
-    maxAge: 7 * 24 * 60 * 60 * 1000,
-    path: '/api/auth',
+    maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
   })
 }
 
 export function clearAuthCookies(res: Response): void {
-  const base = { httpOnly: true, sameSite: 'lax' as const, secure: env.isProd, path: '/' as const }
-  res.clearCookie(ACCESS_COOKIE, { ...base, path: '/api' })
-  res.clearCookie(REFRESH_COOKIE, { ...base, path: '/api/auth' })
+  const isSecure = env.isProd || process.env.NODE_ENV === 'production'
+
+  const base = {
+    httpOnly: true,
+    sameSite: isSecure ? ('none' as const) : ('lax' as const),
+    secure: isSecure,
+    path: '/',
+  }
+
+  res.clearCookie(ACCESS_COOKIE, base)
+  res.clearCookie(REFRESH_COOKIE, base)
 }
 
 declare global {
