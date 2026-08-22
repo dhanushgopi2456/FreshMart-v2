@@ -2,8 +2,20 @@ import axios, { AxiosError } from 'axios'
 import { useAuthStore } from '@/store/authStore'
 import { useToastStore } from '@/store/toastStore'
 
+// Helper to ensure baseURL safely ends with '/api' without double slashes
+const getApiBaseUrl = (): string => {
+  const rawUrl = (import.meta.env.VITE_API_URL as string | undefined) || ''
+  if (!rawUrl || rawUrl.trim() === '') {
+    return '/api'
+  }
+  const cleanUrl = rawUrl.trim().replace(/\/+$/, '')
+  return cleanUrl.endsWith('/api') ? cleanUrl : `${cleanUrl}/api`
+}
+
+const apiBaseUrl = getApiBaseUrl()
+
 const api = axios.create({
-  baseURL: import.meta.env.VITE_API_URL || '/api',
+  baseURL: apiBaseUrl,
   withCredentials: true,
   timeout: 20000,
 })
@@ -35,7 +47,7 @@ api.interceptors.response.use(
 
       try {
         await axios.post(
-          `${import.meta.env.VITE_API_URL || '/api'}/auth/refresh`,
+          `${apiBaseUrl}/auth/refresh`,
           {},
           { withCredentials: true },
         )
