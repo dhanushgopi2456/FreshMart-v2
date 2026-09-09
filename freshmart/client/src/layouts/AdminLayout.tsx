@@ -34,11 +34,14 @@ export function AdminLayout() {
   const { logout, user } = useAuthStore()
   const navigate = useNavigate()
 
-  const handleLogout = async () => {
-    await logout()
-    toastSuccess('Logged out', "You've been logged out safely.")
-    navigate('/')
-  }
+const handleLogout = async () => {
+  await logout()
+
+  toastSuccess('Logged out', "You've been logged out safely.")
+
+  // Force a clean application load after leaving the protected admin area.
+  window.location.replace('/')
+}
 
   return (
     <div className="min-h-screen bg-midnight">
