@@ -1,373 +1,715 @@
-# FreshMart - 3D Organic Marketplace
-
-A premium 3D animated full-stack grocery e-commerce platform built with the MERN stack.
-
-## 🚀 Features
-
-- **3D Interactive Experience** - React Three Fiber powered 3D hero, background particles, and product views
-- **Full E-Commerce** - Product catalog, cart, wishlist, checkout, orders, reviews
-- **AI Shopping Assistant** - OpenRouter powered chat with real product grounding
-- **Secure Authentication** - JWT with refresh tokens, HTTP-only cookies, RBAC
-- **Admin Dashboard** - Analytics, product/inventory/order/user management
-- **Premium UI/UX** - Framer Motion, GSAP animations, Tailwind CSS, dark theme
-- **Responsive Design** - Mobile-first, 360px to 1440px+ breakpoints
-- **Accessibility** - WCAG AA, keyboard navigation, prefers-reduced-motion
-
-## 🛠 Tech Stack
-
-### Frontend
-- React 18 + TypeScript + Vite
-- React Router v6
-- Tailwind CSS
-- React Three Fiber + Drei + Three.js
-- Framer Motion + GSAP + Lenis
-- Zustand + React Hook Form + Zod
-- Axios + Lucide React + Recharts
-
-### Backend
-- Node.js + Express + TypeScript
-- MongoDB + Mongoose
-- JWT (access + refresh tokens)
-- bcryptjs + Helmet + CORS + Rate Limiting
-- Zod validation + OpenRouter AI
-- Nodemailer for emails
-
-## 📦 Project Structure
-
-```
-freshmart/
-├── client/                 # React frontend
-│   ├── src/
-│   │   ├── components/     # Reusable UI components
-│   │   ├── pages/          # Page components
-│   │   ├── layouts/        # Layout components
-│   │   ├── hooks/          # Custom hooks
-│   │   ├── services/       # API services
-│   │   ├── store/          # Zustand stores
-│   │   ├── types/          # TypeScript types
-│   │   ├── utils/          # Utilities
-│   │   ├── animations/     # Animation helpers
-│   │   ├── three/          # Three.js components
-│   │   └── styles/         # Global styles
-│   └── ...
-├── server/                 # Express backend
-│   ├── src/
-│   │   ├── config/         # Configuration
-│   │   ├── controllers/    # Route controllers
-│   │   ├── middleware/     # Express middleware
-│   │   ├── models/         # Mongoose models
-│   │   ├── routes/         # API routes
-│   │   ├── services/       # Business logic
-│   │   ├── utils/          # Utilities
-│   │   ├── validators/     # Zod schemas
-│   │   └── seed/           # Database seeding
-│   └── ...
-└── ...
-```
-
-## 🚀 Getting Started
-
-### Prerequisites
-- Node.js 20+ (`node -v`)
-- MongoDB Atlas account (or local MongoDB)
-- OpenRouter API key (for AI features)
-- Razorpay account (for payments)
-
-> **No MongoDB?** You can run the app with zero external accounts. All optional
-> features (AI, email, payments) gracefully fall back to offline/test mode — the
-> shop, cart, checkout (Cash on Delivery), orders and admin all work with just a
-> local MongoDB or the Docker one-liner below.
-
-### ▶️ How to run in VS Code
-
-This project ships two apps (`client` + `server`) that must run together. The
-easiest way is VS Code's built-in **Run Multiple** feature.
-
-1. **Install the "Run Multiple" extension**
-   - Open the Extensions panel (`Ctrl+Shift+X`)
-   - Search **"Run Multiple"** (by drcnz) and click **Install**
-
-2. **Tasks & launch configs are already included** — the project ships a
-   pre-configured `.vscode/tasks.json` (server + client dev tasks) and a
-   `.vscode/launch.json` ("Run Full Stack"). No setup needed.
-
-   > Simpler alternative (no extension): open **two integrated terminals**
-   > (`Ctrl+Shift+5` to split), then run `npm run dev` in `server/` in the first
-   > and `npm run dev` in `client/` in the second.
-
-4. **Install dependencies** (one time, in the integrated terminal):
-   ```bash
-   cd server && npm install
-   cd ../client && npm install
-   ```
-
-5. **Create the environment files** (first run only):
-   ```bash
-   cd server && cp .env.example .env
-   cd ../client && cp .env.example .env
-   ```
-
-6. **Run the servers** via Run Multiple (or the two terminals), then visit
-   **http://localhost:5173**.
-
-### Installation (manual)
-
-1. **Clone and install dependencies**
-```bash
-cd freshmart
-# Install client dependencies
-cd client && npm install
-# Install server dependencies
-cd ../server && npm install
-```
-
-2. **Configure environment variables**
-```bash
-# Server
-cd server
-cp .env.example .env
-# Edit .env with your values
-
-# Client
-cd ../client
-cp .env.example .env
-# Edit .env with your values
-```
-
-3. **Seed the database**
-```bash
-cd server
-npm run seed
-npm run seed:admin
-```
-
-4. **Start development servers**
-```bash
-# Terminal 1 - Backend
-cd server && npm run dev
-
-# Terminal 2 - Frontend
-cd client && npm run dev
-```
-
-5. **Open http://localhost:5173**
-
-> **Startup tip:** the API serves the frontend proxy at `/api`, so if you only
-> want to see the UI you can start just the server — but running both in dev is
-> the intended flow.
-
-## 🔐 Environment Variables
-
-### Server (.env)
-```env
-NODE_ENV=development
-PORT=5000
-MONGODB_URI=mongodb+srv://...
-JWT_SECRET=your-32-char-secret
-JWT_REFRESH_SECRET=your-32-char-secret
-CLIENT_URL=http://localhost:5173
-OPENROUTER_API_KEY=your-openrouter-key
-OPENROUTER_MODEL=anthropic/claude-3.5-sonnet
-RAZORPAY_KEY_ID=your-razorpay-key
-RAZORPAY_KEY_SECRET=your-razorpay-secret
-EMAIL_HOST=smtp.gmail.com
-EMAIL_PORT=587
-EMAIL_USER=your-email
-EMAIL_PASSWORD=your-app-password
-ADMIN_EMAIL=admin@freshmart.com
-ADMIN_PASSWORD=secure-password
-ADMIN_NAME=FreshMart Admin
-```
-
-### Client (.env)
-```env
-VITE_API_URL=http://localhost:5000/api
-VITE_APP_NAME=FreshMart
-VITE_APP_TAGLINE=3D ORGANIC MARKETPLACE
-VITE_RAZORPAY_KEY_ID=your-razorpay-key
-```
-
-## 📝 Available Scripts
-
-### Client
-```bash
-npm run dev       # Start dev server
-npm run build     # Build for production
-npm run preview   # Preview production build
-npm run lint      # Run ESLint
-```
-
-### Server
-```bash
-npm run dev       # Start dev server with tsx watch
-npm run build     # Compile TypeScript
-npm run start     # Run compiled JS
-npm run seed      # Seed database with sample data
-npm run seed:admin # Create admin user
-npm run lint      # Run ESLint
-```
-
-## 🎨 Brand Guidelines
-
-- **Primary Background**: `#0a0f0d` (Deep midnight navy)
-- **Primary Accent**: `#00d46a` (Fresh emerald green)
-- **Secondary Accent**: `#00f5a0` (Soft mint)
-- **Typography**: Inter + Plus Jakarta Sans
-- **Theme**: Dark, premium, organic, fresh
-
-## 🧪 Testing
-
-```bash
-# Client
-cd client && npm run test
-
-# Server
-cd server && npm run test
-```
-
-## 📚 API Documentation
-
-### Authentication
-- `POST /api/auth/register` - Register new user
-- `POST /api/auth/login` - Login
-- `POST /api/auth/logout` - Logout
-- `POST /api/auth/refresh` - Refresh access token
-- `POST /api/auth/forgot-password` - Request password reset
-- `POST /api/auth/reset-password` - Reset password
-- `GET /api/auth/me` - Get current user
-
-### Products
-- `GET /api/products` - List products (with filters, search, pagination)
-- `GET /api/products/:id` - Get product details
-- `GET /api/products/featured` - Featured products
-- `GET /api/products/bestsellers` - Best selling products
-
-### Categories
-- `GET /api/categories` - List categories
-- `GET /api/categories/:id` - Get category
-
-### Cart
-- `GET /api/cart` - Get user cart
-- `POST /api/cart/items` - Add item to cart
-- `PUT /api/cart/items/:itemId` - Update item quantity
-- `DELETE /api/cart/items/:itemId` - Remove item
-- `DELETE /api/cart` - Clear cart
-
-### Wishlist
-- `GET /api/wishlist` - Get wishlist
-- `POST /api/wishlist/:productId` - Add to wishlist
-- `DELETE /api/wishlist/:productId` - Remove from wishlist
-
-### Orders
-- `POST /api/orders` - Create order
-- `GET /api/orders` - List user orders
-- `GET /api/orders/:id` - Get order details
-- `PUT /api/orders/:id/cancel` - Cancel order
-
-### AI Assistant
-- `POST /api/ai/chat` - Chat with AI
-- `POST /api/ai/recommendations` - Get recommendations
-- `POST /api/ai/product-search` - Search products via AI
-
-### Admin (requires ADMIN role)
-- `GET /api/admin/dashboard` - Dashboard stats
-- `GET /api/admin/analytics` - Analytics data
-- `GET /api/admin/orders` - All orders
-- `PUT /api/admin/orders/:id/status` - Update order status
-- `GET /api/admin/users` - All users
-- `PUT /api/admin/users/:id/status` - Update user status
-- `GET /api/admin/inventory` - Inventory management
-- `PUT /api/admin/inventory/:id` - Update stock
-- `GET /api/admin/coupons` - All coupons
-- `GET /api/admin/reviews` - All reviews
-- `PUT /api/admin/reviews/:id/moderate` - Moderate review
-
-## 🔒 Security Features
-
-- Password hashing with bcrypt (12 rounds)
-- JWT with short-lived access tokens (15min) + refresh tokens (7d)
-- HTTP-only secure cookies for refresh tokens
-- Helmet.js security headers
-- CORS allowlist
-- Rate limiting (general, auth, AI)
-- Input validation with Zod
-- Role-based access control
-- No client-side secrets
-
-## ♿ Accessibility
-
-- Semantic HTML5
-- ARIA labels and roles
-- Keyboard navigation
-- Focus indicators
-- Color contrast (WCAG AA)
-- `prefers-reduced-motion` support
-- Screen reader compatible
-
-## 📱 Responsive Breakpoints
-
-- 360px - Small mobile
-- 390px - Standard mobile
-- 430px - Large mobile
-- 768px - Tablet
-- 1024px - Desktop
-- 1280px - Large desktop
-- 1440px+ - Extra large
-
-## 🚀 Deployment
-
-A full step-by-step guide covering the production build, MongoDB Atlas, Render /
-Railway / VPS + nginx hosting, HTTPS/cookie considerations, and a post-deploy
-checklist lives in **[DEPLOYMENT.md](./DEPLOYMENT.md)**.
-
-Quick summary:
-
-### Frontend (Vercel/Netlify)
-1. Connect repository
-2. Set build command: `npm run build`
-3. Set output directory: `dist`
-4. Add environment variables
-
-### Backend (Render/Railway/Fly.io)
-1. Connect repository
-2. Set build command: `npm run build`
-3. Set start command: `npm run start`
-4. Add environment variables
-5. Ensure MongoDB Atlas allows your deployment IP
-
-## ✅ Verification
-
-The project is verified with:
-
-```bash
-# Type checking
-cd server && npm run typecheck
-cd client && npm run typecheck
-
-# Linting
-cd server && npm run lint       # 0 errors
-cd client && npm run lint       # 0 errors
-
-# Unit tests
-cd server && npm test           # payment service (mock vs real keys)
-cd client && npm test           # formatting + INR utilities
-
-# Production build
-cd client && npm run build      # code-split SPA (three/motion chunks)
-```
-
-## 📄 License
-
-MIT License - feel free to use for learning or commercial projects.
-
-## 🤝 Contributing
-
-1. Fork the repository
-2. Create feature branch
-3. Commit changes
-4. Push to branch
-5. Open Pull Request
+# 🥬 FreshMart — 3D Organic Marketplace
+
+<p align="center">
+  <img src="https://readme-typing-svg.demolab.com?font=Fira+Code&weight=600&size=26&pause=1000&color=00D46A&center=true&vCenter=true&width=850&lines=Welcome+to+FreshMart+%F0%9F%A5%AC;A+3D+Organic+Shopping+Experience;AI-Powered+Grocery+Shopping+%F0%9F%A4%96;Built+with+MERN+%E2%9A%A1;Designed+for+the+Modern+Web+%F0%9F%8C%90" />
+</p>
+
+<p align="center">
+  <strong>A premium full-stack grocery marketplace combining immersive 3D experiences, AI-powered shopping, secure e-commerce, and a powerful admin platform.</strong>
+</p>
+
+<p align="center">
+  <img src="https://img.shields.io/badge/React-18-61DAFB?style=for-the-badge&logo=react&logoColor=white" />
+  <img src="https://img.shields.io/badge/TypeScript-5-3178C6?style=for-the-badge&logo=typescript&logoColor=white" />
+  <img src="https://img.shields.io/badge/Node.js-20+-339933?style=for-the-badge&logo=node.js&logoColor=white" />
+  <img src="https://img.shields.io/badge/Express.js-API-000000?style=for-the-badge&logo=express&logoColor=white" />
+  <img src="https://img.shields.io/badge/MongoDB-Database-47A248?style=for-the-badge&logo=mongodb&logoColor=white" />
+</p>
+
+<p align="center">
+  <img src="https://img.shields.io/badge/Three.js-3D-black?style=flat-square&logo=threedotjs" />
+  <img src="https://img.shields.io/badge/Tailwind-CSS-06B6D4?style=flat-square&logo=tailwindcss" />
+  <img src="https://img.shields.io/badge/OpenRouter-AI-7C3AED?style=flat-square" />
+  <img src="https://img.shields.io/badge/Razorpay-Payments-3395FF?style=flat-square" />
+  <img src="https://img.shields.io/badge/JWT-Authentication-orange?style=flat-square" />
+</p>
 
 ---
 
-Built with ❤️ for the FreshMart 2026 portfolio project.
+## 🌱 Experience Fresh Grocery Shopping Differently
+
+FreshMart is not just another grocery store UI.
+
+It combines:
+
+**🛒 E-Commerce + 🌐 3D Web Experience + 🤖 AI Shopping + 📊 Admin Analytics + 🔐 Secure APIs**
+
+into one modern full-stack application.
+
+```text
+                    🥬 FRESHMART
+                         │
+          ┌──────────────┼──────────────┐
+          │              │              │
+          ▼              ▼              ▼
+      🛒 SHOPPING      🤖 AI         🌐 3D UX
+          │              │              │
+          ▼              ▼              ▼
+       Products      Assistant       Interactive
+       Cart          Recommendations  Experience
+       Wishlist      Product Search   Animations
+          │              │              │
+          └──────────────┼──────────────┘
+                         ▼
+                   💳 CHECKOUT
+                         │
+                         ▼
+                    📦 ORDERS
+                         │
+                         ▼
+                 📊 ADMIN CONTROL
+```
+
+---
+
+# ✨ Why FreshMart?
+
+Traditional e-commerce platforms focus mainly on functionality.
+
+FreshMart focuses on **functionality + experience**.
+
+### 🎨 Immersive UI
+
+A premium dark-themed interface with 3D scenes, particles, smooth transitions, motion effects, and responsive layouts.
+
+### 🤖 AI Shopping Assistant
+
+Customers can interact with an AI assistant that understands the available products and can help with product discovery and recommendations.
+
+### 🛒 Complete Shopping Flow
+
+Browse products → Search → Filter → Wishlist → Cart → Checkout → Payment → Orders → Reviews.
+
+### 📊 Powerful Admin Dashboard
+
+Admins can manage:
+
+* 📦 Products
+* 🏷️ Categories
+* 📊 Analytics
+* 📋 Orders
+* 👥 Users
+* 📦 Inventory
+* 🎟️ Coupons
+* ⭐ Reviews
+
+### 🔐 Security First
+
+JWT authentication, refresh tokens, HTTP-only cookies, RBAC, validation, Helmet, CORS protection, and rate limiting.
+
+### ♿ Accessibility Built In
+
+Keyboard navigation, semantic HTML, ARIA support, WCAG AA contrast, focus states, screen-reader compatibility, and reduced-motion support.
+
+---
+
+# 🚀 Feature Showcase
+
+| 🌟 Feature                   | 💡 What It Does                                  |
+| ---------------------------- | ------------------------------------------------ |
+| 🌐 **3D Marketplace**        | Interactive 3D hero and product experiences      |
+| 🛍️ **Product Catalog**      | Browse, search, filter and discover products     |
+| 🛒 **Smart Cart**            | Add, remove and update product quantities        |
+| ❤️ **Wishlist**              | Save products for later                          |
+| 🤖 **AI Assistant**          | AI-powered product discovery and recommendations |
+| 💳 **Checkout**              | Online payment + Cash on Delivery support        |
+| 📦 **Order Management**      | Track and manage customer orders                 |
+| ⭐ **Reviews**                | Customer product reviews                         |
+| 📊 **Admin Analytics**       | Monitor business activity and performance        |
+| 📦 **Inventory Control**     | Manage product stock                             |
+| 🔐 **Secure Authentication** | JWT + refresh-token authentication               |
+| 📱 **Responsive UI**         | Optimized from 360px mobile to large displays    |
+| ♿ **Accessible UI**          | WCAG AA-oriented accessibility support           |
+
+---
+
+# 🤖 AI-Powered Shopping
+
+FreshMart integrates **OpenRouter-powered AI** directly into the shopping experience.
+
+```text
+                  👤 CUSTOMER
+                       │
+                       ▼
+              💬 AI SHOPPING CHAT
+                       │
+                       ▼
+              🧠 AI UNDERSTANDS
+                       │
+            ┌──────────┼──────────┐
+            ▼          ▼          ▼
+        🔎 Search   🎯 Recommend  🛒 Products
+            │          │          │
+            └──────────┼──────────┘
+                       ▼
+                 🥬 REAL PRODUCTS
+```
+
+### AI Capabilities
+
+* 🔎 Natural-language product search
+* 🎯 Product recommendations
+* 💬 Conversational shopping
+* 🧠 Product-aware responses
+* 🛍️ Shopping assistance
+
+---
+
+# 🌐 3D Experience
+
+FreshMart uses **React Three Fiber, Drei and Three.js** to create an immersive shopping experience.
+
+### 3D Components
+
+```text
+                 🌐 THREE.JS EXPERIENCE
+                           │
+             ┌─────────────┼─────────────┐
+             ▼             ▼             ▼
+        🌌 Particle      🥬 Product      ✨ Hero
+          System           Views          Scene
+             │             │             │
+             └─────────────┼─────────────┘
+                           ▼
+                     🎨 Interactive UI
+```
+
+Combined with:
+
+* Framer Motion
+* GSAP
+* Lenis
+* Tailwind CSS
+* Responsive layouts
+
+the interface is designed to feel more like a **premium digital product experience** than a traditional grocery website.
+
+---
+
+# 🏗️ Full-Stack Architecture
+
+```text
+                         👤 USER
+                           │
+                           ▼
+              ┌────────────────────────┐
+              │      REACT CLIENT      │
+              │                        │
+              │ 🏠 Pages               │
+              │ 🧩 Components          │
+              │ 🛒 Shopping            │
+              │ 🤖 AI Assistant        │
+              │ 👤 Authentication      │
+              │ 📊 Admin Dashboard     │
+              └────────────┬───────────┘
+                           │
+                       Axios API
+                           │
+                           ▼
+              ┌────────────────────────┐
+              │    EXPRESS SERVER     │
+              │                        │
+              │ 🔐 Authentication      │
+              │ 📦 Products            │
+              │ 🛒 Cart                │
+              │ ❤️ Wishlist            │
+              │ 📦 Orders              │
+              │ 🤖 AI Services         │
+              │ 👑 Admin APIs          │
+              └────────────┬───────────┘
+                           │
+             ┌─────────────┼─────────────┐
+             ▼             ▼             ▼
+        🍃 MongoDB      🤖 OpenRouter   💳 Razorpay
+             │             │             │
+             ▼             ▼             ▼
+          Database          AI          Payments
+```
+
+---
+
+# 🔐 Security Architecture
+
+FreshMart includes multiple layers of API and application security.
+
+```text
+                  🌐 REQUEST
+                      │
+                      ▼
+                🛡️ CORS
+                      │
+                      ▼
+              🪖 Helmet Headers
+                      │
+                      ▼
+             🚦 Rate Limiting
+                      │
+                      ▼
+             📝 Zod Validation
+                      │
+                      ▼
+              🔑 JWT Validation
+                      │
+                      ▼
+                👑 RBAC Check
+                      │
+                      ▼
+               🎯 Controller
+                      │
+                      ▼
+                 🍃 MongoDB
+```
+
+### Security Highlights
+
+* 🔑 Short-lived access tokens
+* ♻️ Refresh-token rotation flow
+* 🍪 HTTP-only cookies
+* 🔐 bcrypt password hashing
+* 🛡️ Helmet security headers
+* 🚦 API rate limiting
+* 📝 Zod request validation
+* 👑 Role-based access control
+* 🌐 CORS allowlist
+* 🔒 No client-side secrets
+
+These security controls are documented in the project specification.
+
+---
+
+# 👑 Admin Command Center
+
+FreshMart includes a dedicated administration layer for managing the complete marketplace.
+
+```text
+                    👑 ADMIN
+                       │
+        ┌──────────────┼──────────────┐
+        ▼              ▼              ▼
+    📊 Analytics    📦 Products     📋 Orders
+        │              │              │
+        ▼              ▼              ▼
+     📈 Stats       📦 Inventory    🚚 Status
+        │              │              │
+        ├──────────────┼──────────────┤
+        ▼              ▼              ▼
+     👥 Users       🎟️ Coupons     ⭐ Reviews
+```
+
+### Admin capabilities
+
+* 📊 Dashboard analytics
+* 📦 Product management
+* 📋 Order management
+* 👥 User management
+* 📦 Inventory management
+* 🎟️ Coupon management
+* ⭐ Review moderation
+
+---
+
+# 🧠 State Management
+
+FreshMart uses **Zustand** for lightweight global state management.
+
+```text
+                  Zustand
+                     │
+       ┌─────────────┼─────────────┐
+       ▼             ▼             ▼
+   👤 Auth        🛒 Cart       ❤️ Wishlist
+       │             │             │
+       ▼             ▼             ▼
+   User State    Cart State    Saved Items
+```
+
+Forms are handled using **React Hook Form + Zod**, while Axios manages API communication.
+
+---
+
+# 📱 Responsive by Design
+
+FreshMart is designed across a wide range of devices:
+
+```text
+📱 360px
+   ↓
+📱 390px
+   ↓
+📱 430px
+   ↓
+📱 768px
+   ↓
+💻 1024px
+   ↓
+🖥️ 1280px
+   ↓
+🖥️ 1440px+
+```
+
+The documented responsive targets range from **360px mobile devices through 1440px+ displays**.
+
+---
+
+# ♿ Accessibility
+
+FreshMart doesn't treat accessibility as an afterthought.
+
+### Included
+
+* ♿ Semantic HTML
+* ⌨️ Keyboard navigation
+* 🎯 Focus indicators
+* 🏷️ ARIA labels and roles
+* 🎨 WCAG AA color contrast
+* 🔊 Screen-reader compatibility
+* 🌀 `prefers-reduced-motion`
+
+---
+
+# 🛠️ Tech Stack
+
+## 🎨 Frontend
+
+```text
+React 18
+TypeScript
+Vite
+React Router
+Tailwind CSS
+Three.js
+React Three Fiber
+Drei
+Framer Motion
+GSAP
+Lenis
+Zustand
+React Hook Form
+Zod
+Axios
+Lucide React
+Recharts
+```
+
+## ⚙️ Backend
+
+```text
+Node.js
+Express.js
+TypeScript
+MongoDB
+Mongoose
+JWT
+bcryptjs
+Helmet
+CORS
+Rate Limiting
+Zod
+OpenRouter
+Nodemailer
+```
+
+The repository's documented frontend and backend stack matches this architecture.
+
+---
+
+# 📂 Project Structure
+
+```text
+freshmart/
+│
+├── 🎨 client/
+│   └── src/
+│       ├── components/
+│       ├── pages/
+│       ├── layouts/
+│       ├── hooks/
+│       ├── services/
+│       ├── store/
+│       ├── types/
+│       ├── utils/
+│       ├── animations/
+│       ├── three/
+│       └── styles/
+│
+├── ⚙️ server/
+│   └── src/
+│       ├── config/
+│       ├── controllers/
+│       ├── middleware/
+│       ├── models/
+│       ├── routes/
+│       ├── services/
+│       ├── utils/
+│       ├── validators/
+│       └── seed/
+│
+└── 📄 README.md
+```
+
+---
+
+# 🔌 API Highlights
+
+### 🔐 Authentication
+
+```text
+POST   /api/auth/register
+POST   /api/auth/login
+POST   /api/auth/logout
+POST   /api/auth/refresh
+GET    /api/auth/me
+```
+
+### 🛍️ Products
+
+```text
+GET    /api/products
+GET    /api/products/:id
+GET    /api/products/featured
+GET    /api/products/bestsellers
+```
+
+### 🛒 Cart
+
+```text
+GET    /api/cart
+POST   /api/cart/items
+PUT    /api/cart/items/:itemId
+DELETE /api/cart/items/:itemId
+DELETE /api/cart
+```
+
+### 🤖 AI
+
+```text
+POST   /api/ai/chat
+POST   /api/ai/recommendations
+POST   /api/ai/product-search
+```
+
+### 👑 Admin
+
+```text
+GET    /api/admin/dashboard
+GET    /api/admin/analytics
+GET    /api/admin/orders
+GET    /api/admin/users
+GET    /api/admin/inventory
+GET    /api/admin/coupons
+GET    /api/admin/reviews
+```
+
+The complete endpoint groups are already documented in the project README.
+
+---
+
+# 🎨 Design System
+
+FreshMart follows a premium organic visual identity.
+
+| Element       | Design                    |
+| ------------- | ------------------------- |
+| 🌑 Background | `#0a0f0d`                 |
+| 🟢 Primary    | `#00d46a`                 |
+| 🌱 Secondary  | `#00f5a0`                 |
+| 🔤 Typography | Inter + Plus Jakarta Sans |
+| 🎨 Theme      | Dark / Premium / Organic  |
+| ✨ Motion      | Smooth & interactive      |
+
+---
+
+# 🚀 Development Workflow
+
+```text
+       👨‍💻 Developer
+             │
+             ▼
+       📝 Write Code
+             │
+             ▼
+       🔍 ESLint
+             │
+             ▼
+       🧪 Tests
+             │
+             ▼
+       🏗️ Production Build
+             │
+             ▼
+       🚀 Deployment
+             │
+             ▼
+       🌐 FreshMart
+```
+
+---
+
+# ☁️ Deployment
+
+### Frontend
+
+Compatible deployment targets include:
+
+* ▲ Vercel
+* 🌐 Netlify
+
+### Backend
+
+Compatible targets include:
+
+* 🚀 Render
+* 🚂 Railway
+* 🐳 VPS / Nginx
+* ☁️ Fly.io
+
+The repository also includes a dedicated `DEPLOYMENT.md` covering production builds, MongoDB Atlas, hosting, HTTPS/cookies, and post-deployment checks.
+
+---
+
+# 🗺️ Future Roadmap
+
+```text
+✅ Core E-Commerce
+       │
+       ▼
+✅ AI Shopping Assistant
+       │
+       ▼
+✅ 3D Experience
+       │
+       ▼
+🔮 AI Meal Planner
+       │
+       ▼
+🔮 Personalized Grocery Lists
+       │
+       ▼
+🔮 Voice Shopping Assistant
+       │
+       ▼
+🔮 PWA / Mobile App
+       │
+       ▼
+🔮 Advanced Recommendation Engine
+```
+
+### Planned Ideas
+
+* 🎤 Voice-based shopping
+* 🧠 Personalized recommendations
+* 🥗 AI meal planning
+* 🛒 Smart grocery lists
+* 📱 Progressive Web App
+* 📊 Advanced customer analytics
+* 🔔 Real-time order notifications
+* 🎁 Personalized offers
+
+---
+
+# 💡 What This Project Demonstrates
+
+FreshMart demonstrates practical experience with:
+
+**Frontend Engineering**
+
+→ React architecture
+→ TypeScript
+→ Responsive UI
+→ Advanced animations
+→ 3D web experiences
+
+**Backend Engineering**
+
+→ REST APIs
+→ Express architecture
+→ Authentication
+→ RBAC
+→ Database design
+→ Validation & middleware
+
+**AI Integration**
+
+→ LLM integration
+→ Product-aware AI
+→ AI recommendations
+→ Conversational interfaces
+
+**Production Engineering**
+
+→ Security
+→ Testing
+→ Environment management
+→ Deployment
+→ Error handling
+→ Accessibility
+
+---
+
+# 📈 Engineering Highlights
+
+| Area             | Implementation                |
+| ---------------- | ----------------------------- |
+| ⚛️ Frontend      | React + TypeScript + Vite     |
+| 🌐 3D            | Three.js + React Three Fiber  |
+| 🤖 AI            | OpenRouter                    |
+| 🗄️ Database     | MongoDB + Mongoose            |
+| 🔐 Auth          | JWT + Refresh Tokens          |
+| 👑 Authorization | RBAC                          |
+| 💳 Payments      | Razorpay                      |
+| 📧 Email         | Nodemailer                    |
+| 🛡️ Security     | Helmet + CORS + Rate Limiting |
+| 📝 Validation    | Zod                           |
+| 🎨 Animation     | GSAP + Framer Motion + Lenis  |
+| 📊 Analytics     | Recharts                      |
+| ♿ Accessibility  | WCAG AA-oriented              |
+
+---
+
+# ⭐ The Goal
+
+> **Make grocery shopping feel less like a transaction and more like an experience.**
+
+FreshMart brings together modern web technologies, immersive 3D visuals, AI assistance, secure e-commerce architecture, and a complete administration system into one portfolio-ready full-stack application.
+
+---
+
+# 🤝 Contributing
+
+```text
+🍴 Fork
+  ↓
+🌿 Create Branch
+  ↓
+💻 Build Feature
+  ↓
+🧪 Test
+  ↓
+📤 Push
+  ↓
+🔀 Pull Request
+```
+
+Contributions, improvements, and ideas are welcome.
+
+---
+
+# 📄 License
+
+**MIT License**
+
+Free to use for learning, experimentation, and commercial projects.
+
+---
+
+<p align="center">
+
+### 🥬 FreshMart
+
+**Fresh groceries. Smarter shopping. Better experience.**
+
+Built with ❤️ using **React • TypeScript • Node.js • MongoDB • Three.js • AI**
+
+⭐ **Star the repository if you like the project!**
+
+</p>
