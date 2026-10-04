@@ -710,6 +710,6 @@ Free to use for learning, experimentation, and commercial projects.
 
 Built with ❤️ using **React • TypeScript • Node.js • MongoDB • Three.js • AI**
 
-⭐ **Star the repository if you like the project!**
+⭐ **Star the repository if you like the project**
 
 </p>
