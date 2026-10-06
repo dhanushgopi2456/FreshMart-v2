@@ -5,7 +5,7 @@
 </p>
 
 <p align="center">
-  <strong>A premium full-stack grocery marketplace combining immersive 3D experiences, AI-powered shopping, secure e-commerce, and a powerful admin platform.</strong>
+  <strong>A production-ready full-stack grocery marketplace featuring AI-powered shopping, secure e-commerce, scalable architecture, and a powerful admin platform.</strong>
 </p>
 
 <p align="center">
