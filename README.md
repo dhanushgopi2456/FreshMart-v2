@@ -1,4 +1,4 @@
-# 🥬 FreshMart — Organic Marketplace
+# 🥬 FreshMart —Online  Organic Marketplace
 
 <p align="center">
   <img src="https://readme-typing-svg.demolab.com?font=Fira+Code&weight=600&size=26&pause=1000&color=00D46A&center=true&vCenter=true&width=850&lines=Welcome+to+FreshMart+%F0%9F%A5%AC;A+3D+Organic+Shopping+Experience;AI-Powered+Grocery+Shopping+%F0%9F%A4%96;Built+with+MERN+%E2%9A%A1;Designed+for+the+Modern+Web+%F0%9F%8C%90" />
