@@ -867,5 +867,5 @@ Full-Stack Developer | Software Engineering Graduate
 </p>
 
 <p align="center">
-  ⭐ If you like FreshMart, consider starring the repository!
+  ⭐ If you like FreshMart, consider starring the repository
 </p>
