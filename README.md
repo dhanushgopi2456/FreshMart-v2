@@ -32,9 +32,9 @@
   <a href="#-overview">Overview</a> •
   <a href="#-features">Features</a> •
   <a href="#-3d-experience">3D Experience</a> •
-  <a href="#-#️-full-stack-architecture">Architecture</a> •
+  <a href="#full-stack-architecture">Architecture</a> •
   <a href="#-installation">Installation</a> •
-  <a href="#-roadmap">Roadmap</a>
+  <a href="#roadmap">Roadmap</a>
 </p>
 
 ---
@@ -296,7 +296,7 @@ flowchart TD
 The goal is to create an engaging interface while maintaining usable navigation, accessibility, and responsive performance.
 
 ---
-
+<a id="full-stack-architecture"></a>
 ## 🏗️ Full-Stack Architecture
 
 ```mermaid
@@ -781,7 +781,7 @@ flowchart TD
 - Review logs, errors, and production build output.
 
 ---
-
+<a id="roadmap"></a>
 ## 🗺️ Roadmap
 
 ```text
