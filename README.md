@@ -32,9 +32,9 @@
   <a href="#-overview">Overview</a> •
   <a href="#-features">Features</a> •
   <a href="#-3d-experience">3D Experience</a> •
-  <a href="#-architecture">Architecture</a> •
+  <a href="#-Full-Stack Architecture">Architecture</a> •
   <a href="#-installation">Installation</a> •
-  <a href="#-roadmap">Roadmap</a>
+  <a href="#-Roadmap">Roadmap</a>
 </p>
 
 ---
