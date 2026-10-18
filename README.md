@@ -749,7 +749,7 @@ Run the lint, test, and build commands configured in your repository.
 ## ☁️ Deployment
 
 <p align="center">
-  <a href="">
+  <a href="https://fresh-mart-v2.vercel.app">
     <img src="https://img.shields.io/badge/OPEN_LIVE_APPLICATION-2563EB?style=for-the-badge&logo=vercel&logoColor=white" alt="Open live application"/>
   </a>
 </p>
